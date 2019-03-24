@@ -1,5 +1,3 @@
-
- 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -19,7 +17,7 @@ import javax.swing.Timer;
 
 public class Animation4Thread extends JFrame {
 
-	final int frameCount = 10;
+    final int frameCount = 10;
     BufferedImage[] pics;
     int xloc = 100;
     int yloc = 100;
@@ -28,8 +26,9 @@ public class Animation4Thread extends JFrame {
     final int picSize = 165;
     final int frameStartSize = 800;
     final int drawDelay = 30; //msec
-    
-    boolean buttonTriggered = false;
+    private static Timer timer;
+    private boolean buttonTriggered;
+ 
     
     DrawPanel drawPanel = new DrawPanel();
     Action drawAction;
@@ -41,8 +40,13 @@ public class Animation4Thread extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("hit");
-				buttonTriggered = !buttonTriggered;
+				if (!buttonTriggered) {
+					timer.start();
+                    buttonTriggered = true;
+                } else if (buttonTriggered) {
+                    timer.stop();
+                    buttonTriggered = false;
+                }
 			}
     		
     	});
@@ -84,23 +88,7 @@ public class Animation4Thread extends JFrame {
 		EventQueue.invokeLater(new Runnable(){
 			public void run(){
 				Animation4Thread a = new Animation4Thread();
-				Timer t = new Timer(a.drawDelay, a.drawAction);
-				t.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						if (a.buttonTriggered) {
-							t.setRepeats(false);
-						}
-						else {
-							System.out.println("AGH");
-							t.setRepeats(true);
-						}
-						
-					}
-					
-				});
-				t.start();
+				timer = new Timer(a.drawDelay, a.drawAction);
 			}
 		});
 	}
