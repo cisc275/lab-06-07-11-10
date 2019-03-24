@@ -90,11 +90,11 @@ public class Animation4Thread extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if (a.buttonTriggered) {
-							t.stop();
+							t.setRepeats(false);
 						}
 						else {
 							System.out.println("AGH");
-							t.start();
+							t.setRepeats(true);
 						}
 						
 					}
