@@ -17,7 +17,7 @@ import javax.swing.Timer;
 
 public class Animation4Thread extends JFrame {
 
-	final int frameCount = 10;
+    final int frameCount = 10;
     BufferedImage[] pics;
     int xloc = 100;
     int yloc = 100;
