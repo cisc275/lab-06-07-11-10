@@ -9,26 +9,31 @@
  **/
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class View extends JPanel {
 	final int frameCount = 10;
     int picNum = 0;
+    JButton btn = new JButton("Start/Stop");
     BufferedImage[][] pics;
-    final static int frameWidth = 500;
-    final static int frameHeight = 300;
+    final static int frameWidth = 800;
+    final static int frameHeight = 500;
     final static int imgWidth = 165;
     final static int imgHeight = 165;
     
     public View() {
     	JFrame frame = new JFrame();
+        this.add(btn);
         frame.getContentPane().add(this);
+
         frame.setBackground(Color.gray);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(frameWidth, frameHeight);
@@ -47,6 +52,10 @@ public class View extends JPanel {
         }
         
     }
+        
+	public void addActionListener(Controller controller) {
+		btn.addActionListener(controller);
+	}
     
     public void paint(Graphics g) { 
     	//g.drawImage(pics[picNum][3], 0, 0, Color.gray, this);
@@ -61,7 +70,7 @@ public class View extends JPanel {
     private BufferedImage[] createImage(String[] strArr){
         //for (String str : strArr) System.out.println(str);
         BufferedImage[] bufferedImage = new BufferedImage[strArr.length];
-        String path = "images/orc/orc_";
+        String path = "images.orc/orc_";
         int count = 0;
         for (String str : strArr) {
             //System.out.println(path.concat(str).concat(".png"));
@@ -107,5 +116,7 @@ public class View extends JPanel {
 	public static int getImageHeight() {
 		return imgHeight;
 	}
+	//---------------------------Draw Panel--------------------------------------
+
 
 }
