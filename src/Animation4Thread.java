@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +19,7 @@ import javax.swing.Timer;
 
 
 
-public class Animation4Thread extends JFrame {
+public class Animation4Thread extends JFrame{
 
     final int frameCount = 10;
     BufferedImage[] pics;
@@ -35,6 +37,7 @@ public class Animation4Thread extends JFrame {
     DrawPanel drawPanel = new DrawPanel();
     Action drawAction;
     JButton btn = new JButton();
+    //KeyStroke key = new KeyStroke(); 
     
     public Animation4Thread() {
     	btn.setText("Stop/Start");
@@ -59,6 +62,26 @@ public class Animation4Thread extends JFrame {
     	};
     	
     	drawPanel.add(btn);
+    	//drawPanel.add(new JButton("test"));
+    	this.addKeyListener(new KeyListener() {
+    		public void keyTyped(KeyEvent e) {
+    			// TODO Auto-generated method stub
+    			System.out.println("typed");
+
+    		}
+
+    		public void keyPressed(KeyEvent e) {
+    			// TODO Auto-generated method stub
+    			System.out.println("pressed");
+    			
+    		}
+
+    		public void keyReleased(KeyEvent e) {
+    			// TODO Auto-generated method stub
+    			System.out.println("released");
+
+    		}
+    	});
     	add(drawPanel);
     	BufferedImage img = createImage();
     	pics = new BufferedImage[frameCount];//get this dynamically
@@ -106,4 +129,29 @@ public class Animation4Thread extends JFrame {
     	}
     	return null;
     }
+
+
 }
+/*
+class KeyStroke implements KeyListener{
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
+*/
