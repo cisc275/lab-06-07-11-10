@@ -24,7 +24,7 @@ public class Controller implements ActionListener {
 	public void start(){
 		drawAction = new AbstractAction(){
     		public void actionPerformed(ActionEvent e){
-    			//increment the x and y coordinates, alter direction if necessary
+    			 //increment the x and y coordinates, alter direction if necessary
     			model.updateLocationAndDirection();
     			
     			//update the view
