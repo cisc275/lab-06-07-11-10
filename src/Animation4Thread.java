@@ -9,6 +9,8 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -41,6 +43,7 @@ public class Animation4Thread extends JFrame{
     
     public Animation4Thread() {
     	btn.setText("Stop/Start");
+    	btn.setFocusable(false);
     	btn.addActionListener((ActionListener) new ActionListener() {
 
 			@Override
@@ -62,28 +65,43 @@ public class Animation4Thread extends JFrame{
     	};
     	
     	drawPanel.add(btn);
-    	//drawPanel.add(new JButton("test"));
     	this.addKeyListener(new KeyListener() {
+    		Timer time;
+    		
     		public void keyTyped(KeyEvent e) {
     			// TODO Auto-generated method stub
     			System.out.println("typed");
+    			if(e.getKeyChar() == 'f') {
+    				System.out.println("f");
+    				BufferedImage img = createImage("images.orc/orc_fire_southeast.png");
+    				for(int i = 0; i < 4; i++) 
+    					pics[i] = img.getSubimage(picSize*i, 0, picSize, picSize);
+//    				for(int i = 0; i < 4; i++)
+//    					drawPanel.repaint();
+//    					
+//    				BufferedImage img2 = createImage("images.orc/orc_forward_southeast.png");
+//    				for(int i = 0; i < frameCount; i++) 
+//    					pics[i] = img2.getSubimage(picSize*i, 0, picSize, picSize);
+    			}
+    			else if(e.getKeyChar() == 'j') {
+    				System.out.println("j");
+    			}
 
     		}
 
     		public void keyPressed(KeyEvent e) {
-    			// TODO Auto-generated method stub
     			System.out.println("pressed");
     			
     		}
 
     		public void keyReleased(KeyEvent e) {
-    			// TODO Auto-generated method stub
     			System.out.println("released");
 
     		}
     	});
     	add(drawPanel);
-    	BufferedImage img = createImage();
+
+    	BufferedImage img = createImage("images.orc/orc_forward_southeast.png");
     	pics = new BufferedImage[frameCount];//get this dynamically
     	for(int i = 0; i < frameCount; i++)
     		pics[i] = img.getSubimage(picSize*i, 0, picSize, picSize);
@@ -119,10 +137,10 @@ public class Animation4Thread extends JFrame{
 	}
     
     //Read image from file and return
-    private BufferedImage createImage(){
+    private BufferedImage createImage(String s){
     	BufferedImage bufferedImage;
     	try {
-    		bufferedImage = ImageIO.read(new File("images.orc/orc_forward_southeast.png"));
+    		bufferedImage = ImageIO.read(new File(s));
     		return bufferedImage;
     	} catch (IOException e) {
     		e.printStackTrace();
@@ -132,26 +150,3 @@ public class Animation4Thread extends JFrame{
 
 
 }
-/*
-class KeyStroke implements KeyListener{
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-}
-*/
