@@ -24,7 +24,14 @@ import javax.swing.Timer;
 public class Animation4Thread extends JFrame{
 
     final int frameCount = 10;
+    final int fireCount = 4;
+    final int jumpCount = 8;
+    boolean fire = false;
+    boolean jump = false;
     BufferedImage[] pics;
+    BufferedImage[] pics2 = new BufferedImage[fireCount];
+    BufferedImage[] pics3 = new BufferedImage[jumpCount];
+    int action = 0;
     int xloc = 100;
     int yloc = 100;
     final int xIncr = 1;
@@ -39,7 +46,6 @@ public class Animation4Thread extends JFrame{
     DrawPanel drawPanel = new DrawPanel();
     Action drawAction;
     JButton btn = new JButton();
-    //KeyStroke key = new KeyStroke(); 
     
     public Animation4Thread() {
     	btn.setText("Stop/Start");
@@ -67,30 +73,37 @@ public class Animation4Thread extends JFrame{
     	drawPanel.add(btn);
     	this.addKeyListener(new KeyListener() {
     		Timer time;
+
     		
     		public void keyTyped(KeyEvent e) {
     			// TODO Auto-generated method stub
     			System.out.println("typed");
-    			if(e.getKeyChar() == 'f') {
-    				System.out.println("f");
-    				BufferedImage img = createImage("images.orc/orc_fire_southeast.png");
-    				for(int i = 0; i < 4; i++) 
-    					pics[i] = img.getSubimage(picSize*i, 0, picSize, picSize);
-//    				for(int i = 0; i < 4; i++)
-//    					drawPanel.repaint();
-//    					
-//    				BufferedImage img2 = createImage("images.orc/orc_forward_southeast.png");
-//    				for(int i = 0; i < frameCount; i++) 
-//    					pics[i] = img2.getSubimage(picSize*i, 0, picSize, picSize);
-    			}
-    			else if(e.getKeyChar() == 'j') {
-    				System.out.println("j");
-    			}
+    			
+    			
 
     		}
 
     		public void keyPressed(KeyEvent e) {
     			System.out.println("pressed");
+    			if(e.getKeyChar() == 'f') {
+    				fire = true;
+    				System.out.println("f");
+    				BufferedImage img2 = createImage("images.orc/orc_fire_southeast.png");
+    				for(int i = 0; i < fireCount; i++) {
+        				action+=1;
+    					pics2[i] = img2.getSubimage(picSize*i, 0, picSize, picSize);
+    				}
+    			}
+    			else if(e.getKeyChar() == 'j') {
+    				jump = true;
+    				System.out.println("j");
+    				BufferedImage img3 = createImage("images.orc/orc_jump_southeast.png");
+    				for(int i = 0; i < jumpCount; i++) {
+    					action+=1;
+    					pics3[i] = img3.getSubimage(picSize*i, 0, picSize, picSize);
+    				}
+    			}
+    			
     			
     		}
 
@@ -119,9 +132,35 @@ public class Animation4Thread extends JFrame{
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			g.setColor(Color.gray);
-	    	picNum = (picNum + 1) % frameCount;
-	    	g.drawImage(pics[picNum], xloc+=xIncr, yloc+=yIncr, Color.gray, this);
+	    	if (fire == true) {
+	    		if(action == fireCount) {
+	    			picNum =0;
+	    		}
+		    	picNum = (picNum + 1) % fireCount;
+	    		g.drawImage(pics2[picNum], xloc+=xIncr, yloc+=yIncr, Color.gray, this);
+	    		action-=1;
+	    		if (action == 0) {
+	    			fire = false;
+	    		}
+	    	}
+	    	else if (jump == true) {
+	    		if(action == jumpCount) {
+	    			picNum =0;
+	    		}
+		    	picNum = (picNum + 1) % jumpCount;
+	    		g.drawImage(pics3[picNum], xloc+=xIncr, yloc+=yIncr, Color.gray, this);
+	    		action-=1;
+	    		if (action == 0) {
+	    			jump = false;
+	    		}
+	    		
+	    	}
+	    	else if (action ==0) {
+		    	picNum = (picNum + 1) % frameCount;
+		    	g.drawImage(pics[picNum], xloc+=xIncr, yloc+=yIncr, Color.gray, this);
+	    	}
 		}
+
 
 		public Dimension getPreferredSize() {
 			return new Dimension(frameStartSize, frameStartSize);
