@@ -31,6 +31,7 @@ public class Model {
 		frameHeight = igH;
 	}
 	
+	//increments the x and y position and turns around the orc if it hits a wall
 	public void updateLocationAndDirection() {
 		//System.out.println(frameWidth - imgWidth);
         if(xloc > (imgWidth - frameWidth) || xloc < 0) {
