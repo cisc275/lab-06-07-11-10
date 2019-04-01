@@ -1,11 +1,14 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Timer;
 
-public class Controller implements ActionListener {
+public class Controller implements ActionListener, KeyListener{
 
 	private Model model;
 	private View view;
@@ -16,6 +19,7 @@ public class Controller implements ActionListener {
 	public Controller(){
 		view = new View();
 		view.addActionListener(this);
+		view.addKeyListener(this);
 		buttonTriggered = false;
 		model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
 	}
@@ -36,7 +40,6 @@ public class Controller implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Hit");
 		if (!buttonTriggered) {
 			time.start();
             buttonTriggered = true;
@@ -46,4 +49,21 @@ public class Controller implements ActionListener {
         }
 		
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyChar() == 'f') {
+			view.animateFire(model.getDirect());
+		}
+		else if(e.getKeyChar() == 'j') {
+			view.animateJump(model.getDirect());
+		}
+		model.updateLocationAndDirection();
+		view.update(model.getX(), model.getY(), model.getDirect());
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {}
+	
+	@Override
+	public void keyTyped(KeyEvent e) {}
 }

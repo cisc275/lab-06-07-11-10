@@ -1,6 +1,8 @@
 import java.awt.Color;
+import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 public class Main {
     final static int frameWidth = 800;
